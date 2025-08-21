@@ -10,6 +10,11 @@
     <style>
         body {
             font-family: 'Inter', sans-serif;
+            /* Aquatic background image */
+            background-image: url('https://images.unsplash.com/photo-1535441220208-a4a5fed15d2a?q=80&w=2070&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
         }
         .gauge-container {
             position: relative;
@@ -29,6 +34,19 @@
         .modal-container {
             transition: transform 0.3s ease;
         }
+        /* Glassmorphism style for panels */
+        .bg-glass {
+            background-color: rgba(17, 24, 39, 0.7); /* bg-gray-900 with opacity */
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .bg-glass-darker {
+             background-color: rgba(17, 24, 39, 0.8); /* Darker for modal */
+             backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
     </style>
 </head>
 <body class="bg-gray-900 text-white">
@@ -37,15 +55,15 @@
         <!-- Header -->
         <header class="mb-6 flex flex-wrap justify-between items-center gap-4">
             <div>
-                <h1 class="text-3xl font-bold text-cyan-400">AquaControl</h1>
-                <p class="text-gray-400">Your Aquarium, Perfectly Managed.</p>
+                <h1 class="text-3xl font-bold text-cyan-300">AquaControl</h1>
+                <p class="text-gray-300">Your Aquarium, Perfectly Managed.</p>
             </div>
             <div class="flex items-center space-x-4">
                 <div id="connection-status" class="flex items-center space-x-2">
                     <div class="w-3 h-3 rounded-full bg-red-500 animate-pulse"></div>
                     <span class="text-gray-400">Disconnected</span>
                 </div>
-                 <button id="reconnect-btn" class="bg-cyan-500 hover:bg-cyan-600 text-white font-bold py-2 px-4 rounded-lg transition duration-300">
+                 <button id="reconnect-btn" class="bg-cyan-500 hover:bg-cyan-600 text-white font-bold py-2 px-4 rounded-lg transition duration-300 border border-cyan-400">
                     Connect
                 </button>
             </div>
@@ -57,8 +75,8 @@
             <!-- Sensor Readings Column -->
             <div class="lg:col-span-1 flex flex-col gap-6">
                 <!-- Temperature Gauge -->
-                <div class="bg-gray-800 p-4 rounded-xl shadow-lg">
-                    <h2 class="text-lg font-semibold text-gray-300 mb-2 flex items-center gap-2">
+                <div class="bg-glass p-4 rounded-xl shadow-lg">
+                    <h2 class="text-lg font-semibold text-gray-200 mb-2 flex items-center gap-2">
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 4v10.54a4 4 0 1 1-4 0V4a2 2 0 0 1 4 0Z"/></svg>
                         Temperature
                     </h2>
@@ -69,8 +87,8 @@
                 </div>
 
                 <!-- pH Gauge -->
-                <div class="bg-gray-800 p-4 rounded-xl shadow-lg">
-                    <h2 class="text-lg font-semibold text-gray-300 mb-2 flex items-center gap-2">
+                <div class="bg-glass p-4 rounded-xl shadow-lg">
+                    <h2 class="text-lg font-semibold text-gray-200 mb-2 flex items-center gap-2">
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2v2"/><path d="M12 2v2"/><path d="M16 2v2"/><path d="M7 22h10"/><path d="M5 12.34V6a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v6.34a6.5 6.5 0 0 1-2.9 5.66l-2.7 1.62a3.5 3.5 0 0 1-3.8 0l-2.7-1.62A6.5 6.5 0 0 1 5 12.34Z"/></svg>
                         pH Level
                     </h2>
@@ -84,39 +102,39 @@
             <!-- Second Sensor Column -->
             <div class="lg:col-span-1 flex flex-col gap-6">
                  <!-- TDS -->
-                <div class="bg-gray-800 p-4 rounded-xl shadow-lg text-center">
-                    <h2 class="text-lg font-semibold text-gray-300 mb-2 flex items-center justify-center gap-2">
+                <div class="bg-glass p-4 rounded-xl shadow-lg text-center">
+                    <h2 class="text-lg font-semibold text-gray-200 mb-2 flex items-center justify-center gap-2">
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 2-5.5 5.5"/><path d="m20 10-5.5 5.5"/><path d="M2 12l5.5 5.5"/><path d="m10 20 5.5-5.5"/></svg>
                         TDS
                     </h2>
-                    <p class="text-4xl font-bold text-cyan-400"><span id="tds-value">--</span> <span class="text-2xl text-gray-400">ppm</span></p>
+                    <p class="text-4xl font-bold text-cyan-300"><span id="tds-value">--</span> <span class="text-2xl text-gray-400">ppm</span></p>
                 </div>
                  <!-- Ammonia -->
-                <div class="bg-gray-800 p-4 rounded-xl shadow-lg text-center">
-                    <h2 class="text-lg font-semibold text-gray-300 mb-2 flex items-center justify-center gap-2">
+                <div class="bg-glass p-4 rounded-xl shadow-lg text-center">
+                    <h2 class="text-lg font-semibold text-gray-200 mb-2 flex items-center justify-center gap-2">
                          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/><path d="m13 13-4 4"/><path d="m13.5 8.5-5 5"/><path d="m11 11-4 4"/><path d="m15 7-8 8"/></svg>
                         Ammonia (NH₃)
                     </h2>
                     <p class="text-4xl font-bold text-green-400"><span id="ammonia-value">--</span> <span class="text-2xl text-gray-400">ppm</span></p>
                 </div>
                  <!-- Water Level -->
-                <div class="bg-gray-800 p-4 rounded-xl shadow-lg text-center">
-                    <h2 class="text-lg font-semibold text-gray-300 mb-2 flex items-center justify-center gap-2">
+                <div class="bg-glass p-4 rounded-xl shadow-lg text-center">
+                    <h2 class="text-lg font-semibold text-gray-200 mb-2 flex items-center justify-center gap-2">
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0L12 2.69z"/></svg>
                         Water Level
                     </h2>
-                    <p class="text-4xl font-bold text-cyan-400" id="water-level">--</p>
+                    <p class="text-4xl font-bold text-cyan-300" id="water-level">--</p>
                 </div>
             </div>
 
             <!-- Controls & History Column -->
             <div class="lg:col-span-2 flex flex-col gap-6">
                 <!-- Main Controls -->
-                <div class="bg-gray-800 p-6 rounded-xl shadow-lg">
-                    <h2 class="text-xl font-bold mb-4 text-gray-300">System Controls</h2>
+                <div class="bg-glass p-6 rounded-xl shadow-lg">
+                    <h2 class="text-xl font-bold mb-4 text-gray-200">System Controls</h2>
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
                         <!-- Main Pump -->
-                        <div class="flex items-center justify-between bg-gray-700 p-4 rounded-lg">
+                        <div class="flex items-center justify-between bg-gray-900/50 p-4 rounded-lg">
                             <span class="font-medium flex items-center gap-2">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7v10c0 1.1.9 2 2 2h14a2 2 0 0 0 2-2V7"/><path d="M2 12h20"/><path d="M12 2a4 4 0 0 0-4 4v4a4 4 0 0 0 8 0V6a4 4 0 0 0-4-4Z"/></svg>
                                 Main Pump
@@ -127,7 +145,7 @@
                             </label>
                         </div>
                         <!-- Feeder -->
-                        <div class="flex items-center justify-between bg-gray-700 p-4 rounded-lg">
+                        <div class="flex items-center justify-between bg-gray-900/50 p-4 rounded-lg">
                              <span class="font-medium flex items-center gap-2">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22a2.95 2.95 0 0 1-2.1-5.1L15 11.8a2.95 2.95 0 0 1 5.1 2.1A2.95 2.95 0 0 1 18 16a2.95 2.95 0 0 1-2.1 5.1L10.8 16a2.95 2.95 0 0 1-2.9 2.9Z"/><path d="M22 12a2.95 2.95 0 0 1-5.1-2.1L11.8 15a2.95 2.95 0 0 1-2.1-5.1A2.95 2.95 0 0 1 12 8a2.95 2.95 0 0 1 5.1 2.1L16 15.2a2.95 2.95 0 0 1 2.9-2.9Z"/><path d="m15.2 10.8 1.6-2.7a3.5 3.5 0 0 0-5.8-2.2L8.1 8.1a3.5 3.5 0 0 0 2.2 5.8l2.7-1.6"/><path d="m8.8 13.2-1.6 2.7a3.5 3.5 0 0 0 5.8 2.2l2.9-2.9a3.5 3.5 0 0 0-2.2-5.8l-2.7 1.6"/></svg>
                                 Auto Feeder
@@ -138,7 +156,7 @@
                             </label>
                         </div>
                          <!-- Heater Status -->
-                        <div class="flex items-center justify-between bg-gray-700 p-4 rounded-lg sm:col-span-2">
+                        <div class="flex items-center justify-between bg-gray-900/50 p-4 rounded-lg sm:col-span-2">
                              <span class="font-medium flex items-center gap-2">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 9a2 2 0 0 0-2 2v2.5a2.5 2.5 0 0 0 5 0V11a2 2 0 0 0-2-2z"/><path d="M12 9V4"/><path d="m15 6-3-3-3 3"/></svg>
                                 Heater Status
@@ -149,14 +167,14 @@
                             </div>
                         </div>
                     </div>
-                     <button id="feed-now-btn" class="w-full mt-6 bg-cyan-500 hover:bg-cyan-600 text-white font-bold py-3 px-4 rounded-lg transition duration-300 disabled:bg-gray-500 disabled:cursor-not-allowed">
+                     <button id="feed-now-btn" class="w-full mt-6 bg-cyan-500 hover:bg-cyan-600 text-white font-bold py-3 px-4 rounded-lg transition duration-300 disabled:bg-gray-500 disabled:cursor-not-allowed border border-cyan-400">
                         Feed Now
                     </button>
                 </div>
 
                 <!-- History Chart -->
-                <div class="bg-gray-800 p-6 rounded-xl shadow-lg">
-                    <h2 class="text-xl font-bold mb-4 text-gray-300">Sensor History</h2>
+                <div class="bg-glass p-6 rounded-xl shadow-lg">
+                    <h2 class="text-xl font-bold mb-4 text-gray-200">Sensor History</h2>
                     <div class="h-64">
                         <canvas id="historyChart"></canvas>
                     </div>
@@ -166,8 +184,8 @@
             <!-- Lighting & Logs Column -->
             <div class="lg:col-span-1 flex flex-col gap-6">
                 <!-- Lighting Control -->
-                <div class="bg-gray-800 p-6 rounded-xl shadow-lg">
-                    <h2 class="text-xl font-bold mb-4 text-gray-300 flex items-center gap-2">
+                <div class="bg-glass p-6 rounded-xl shadow-lg">
+                    <h2 class="text-xl font-bold mb-4 text-gray-200 flex items-center gap-2">
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 18a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6c0 2.06-1.09 3.88-2.73 4.97"/><path d="M12 22v-2"/><path d="M12 6V4"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m4.93 19.07 1.41-1.41"/><path d="m17.66 6.34 1.41-1.41"/></svg>
                         Lighting
                     </h2>
@@ -181,12 +199,12 @@
                     </div>
                 </div>
                 <!-- System Log -->
-                <div class="bg-gray-800 p-4 rounded-xl shadow-lg flex-grow">
-                    <h2 class="text-lg font-semibold text-gray-300 mb-2 flex items-center gap-2">
+                <div class="bg-glass p-4 rounded-xl shadow-lg flex-grow">
+                    <h2 class="text-lg font-semibold text-gray-200 mb-2 flex items-center gap-2">
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5"/><path d="M14 3h7v7"/><path d="M14 10.5 21 3.5"/></svg>
                         System Log
                     </h2>
-                    <div id="log-container" class="h-48 overflow-y-auto bg-gray-900 rounded-md p-2 text-sm font-mono text-gray-400">
+                    <div id="log-container" class="h-48 overflow-y-auto bg-black bg-opacity-25 rounded-md p-2 text-sm font-mono text-gray-300">
                         <!-- Log messages will appear here -->
                     </div>
                 </div>
@@ -197,9 +215,9 @@
 
     <!-- Feed Confirmation Modal -->
     <div id="feed-modal" class="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center p-4 z-50 hidden modal-overlay">
-        <div class="bg-gray-800 rounded-xl shadow-2xl p-6 w-full max-w-sm modal-container scale-95">
+        <div class="bg-glass-darker rounded-xl shadow-2xl p-6 w-full max-w-sm modal-container scale-95">
             <h2 class="text-xl font-bold text-white mb-4">Confirm Feeding</h2>
-            <p class="text-gray-400 mb-6">Are you sure you want to dispense one serving of food now?</p>
+            <p class="text-gray-300 mb-6">Are you sure you want to dispense one serving of food now?</p>
             <div class="flex justify-end gap-4">
                 <button id="cancel-feed-btn" class="px-4 py-2 bg-gray-600 hover:bg-gray-500 text-white font-semibold rounded-lg transition">Cancel</button>
                 <button id="confirm-feed-btn" class="px-4 py-2 bg-cyan-500 hover:bg-cyan-600 text-white font-semibold rounded-lg transition">Confirm</button>
@@ -345,7 +363,7 @@
                 if (data.waterLevel !== undefined) {
                     waterLevel.textContent = data.waterLevel ? 'OK' : 'LOW';
                     waterLevel.classList.toggle('text-red-500', !data.waterLevel);
-                    waterLevel.classList.toggle('text-cyan-400', data.waterLevel);
+                    waterLevel.classList.toggle('text-cyan-300', data.waterLevel);
                 }
                 if (data.heaterOn !== undefined) {
                     heaterStatusText.textContent = data.heaterOn ? 'ON' : 'OFF';
