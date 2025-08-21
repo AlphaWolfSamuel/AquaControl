@@ -14,7 +14,6 @@
         .gauge-container {
             position: relative;
             width: 100%;
-            /* Adjusted for a more compact gauge */
             padding-top: 75%; /* 4:3 aspect ratio */
         }
         .gauge-canvas {
@@ -24,7 +23,6 @@
             width: 100%;
             height: 100%;
         }
-        /* Styles for the confirmation modal */
         .modal-overlay {
             transition: opacity 0.3s ease;
         }
@@ -54,10 +52,10 @@
         </header>
 
         <!-- Main Grid -->
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 gap-6">
 
             <!-- Sensor Readings Column -->
-            <div class="lg:col-span-2 xl:col-span-1 flex flex-col gap-6">
+            <div class="lg:col-span-1 flex flex-col gap-6">
                 <!-- Temperature Gauge -->
                 <div class="bg-gray-800 p-4 rounded-xl shadow-lg">
                     <h2 class="text-lg font-semibold text-gray-300 mb-2 flex items-center gap-2">
@@ -82,9 +80,37 @@
                     <p class="text-center text-3xl font-bold mt-2"><span id="ph-value">--</span></p>
                 </div>
             </div>
+            
+            <!-- Second Sensor Column -->
+            <div class="lg:col-span-1 flex flex-col gap-6">
+                 <!-- TDS -->
+                <div class="bg-gray-800 p-4 rounded-xl shadow-lg text-center">
+                    <h2 class="text-lg font-semibold text-gray-300 mb-2 flex items-center justify-center gap-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 2-5.5 5.5"/><path d="m20 10-5.5 5.5"/><path d="M2 12l5.5 5.5"/><path d="m10 20 5.5-5.5"/></svg>
+                        TDS
+                    </h2>
+                    <p class="text-4xl font-bold text-cyan-400"><span id="tds-value">--</span> <span class="text-2xl text-gray-400">ppm</span></p>
+                </div>
+                 <!-- Ammonia -->
+                <div class="bg-gray-800 p-4 rounded-xl shadow-lg text-center">
+                    <h2 class="text-lg font-semibold text-gray-300 mb-2 flex items-center justify-center gap-2">
+                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/><path d="m13 13-4 4"/><path d="m13.5 8.5-5 5"/><path d="m11 11-4 4"/><path d="m15 7-8 8"/></svg>
+                        Ammonia (NH₃)
+                    </h2>
+                    <p class="text-4xl font-bold text-green-400"><span id="ammonia-value">--</span> <span class="text-2xl text-gray-400">ppm</span></p>
+                </div>
+                 <!-- Water Level -->
+                <div class="bg-gray-800 p-4 rounded-xl shadow-lg text-center">
+                    <h2 class="text-lg font-semibold text-gray-300 mb-2 flex items-center justify-center gap-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0L12 2.69z"/></svg>
+                        Water Level
+                    </h2>
+                    <p class="text-4xl font-bold text-cyan-400" id="water-level">--</p>
+                </div>
+            </div>
 
             <!-- Controls & History Column -->
-            <div class="lg:col-span-2 xl:col-span-2 flex flex-col gap-6">
+            <div class="lg:col-span-2 flex flex-col gap-6">
                 <!-- Main Controls -->
                 <div class="bg-gray-800 p-6 rounded-xl shadow-lg">
                     <h2 class="text-xl font-bold mb-4 text-gray-300">System Controls</h2>
@@ -111,6 +137,17 @@
                                 <div class="relative w-11 h-6 bg-gray-600 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-cyan-500"></div>
                             </label>
                         </div>
+                         <!-- Heater Status -->
+                        <div class="flex items-center justify-between bg-gray-700 p-4 rounded-lg sm:col-span-2">
+                             <span class="font-medium flex items-center gap-2">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 9a2 2 0 0 0-2 2v2.5a2.5 2.5 0 0 0 5 0V11a2 2 0 0 0-2-2z"/><path d="M12 9V4"/><path d="m15 6-3-3-3 3"/></svg>
+                                Heater Status
+                            </span>
+                            <div class="flex items-center gap-2">
+                                <svg id="heater-status-icon" class="text-gray-500" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 6v6"/><path d="M12 12l3.5 3.5"/><path d="M12 12H6"/><path d="M12 12l-3.5 3.5"/><circle cx="12" cy="12" r="10"/></svg>
+                                <span id="heater-status-text" class="font-semibold text-gray-400">OFF</span>
+                            </div>
+                        </div>
                     </div>
                      <button id="feed-now-btn" class="w-full mt-6 bg-cyan-500 hover:bg-cyan-600 text-white font-bold py-3 px-4 rounded-lg transition duration-300 disabled:bg-gray-500 disabled:cursor-not-allowed">
                         Feed Now
@@ -126,16 +163,8 @@
                 </div>
             </div>
 
-            <!-- Status & Logs Column -->
-            <div class="lg:col-span-2 xl:col-span-1 flex flex-col gap-6">
-                 <!-- Water Level -->
-                <div class="bg-gray-800 p-4 rounded-xl shadow-lg text-center">
-                    <h2 class="text-lg font-semibold text-gray-300 mb-2 flex items-center justify-center gap-2">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0L12 2.69z"/></svg>
-                        Water Level
-                    </h2>
-                    <p class="text-3xl font-bold text-cyan-400" id="water-level">OK</p>
-                </div>
+            <!-- Lighting & Logs Column -->
+            <div class="lg:col-span-1 flex flex-col gap-6">
                 <!-- Lighting Control -->
                 <div class="bg-gray-800 p-6 rounded-xl shadow-lg">
                     <h2 class="text-xl font-bold mb-4 text-gray-300 flex items-center gap-2">
@@ -181,12 +210,16 @@
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             let websocket;
-            const MAX_HISTORY = 30; // Max data points for the history chart
+            const MAX_HISTORY = 30;
 
             // --- Element References ---
             const tempValue = document.getElementById('temp-value');
             const phValue = document.getElementById('ph-value');
+            const tdsValue = document.getElementById('tds-value');
+            const ammoniaValue = document.getElementById('ammonia-value');
             const waterLevel = document.getElementById('water-level');
+            const heaterStatusIcon = document.getElementById('heater-status-icon');
+            const heaterStatusText = document.getElementById('heater-status-text');
             const connectionStatusDiv = document.getElementById('connection-status');
             const logContainer = document.getElementById('log-container');
             const reconnectBtn = document.getElementById('reconnect-btn');
@@ -203,13 +236,8 @@
             const confirmFeedBtn = document.getElementById('confirm-feed-btn');
             const cancelFeedBtn = document.getElementById('cancel-feed-btn');
 
-            // --- Chart Instances ---
             let tempGauge, phGauge, historyChart;
-            const historyData = {
-                labels: [],
-                temp: [],
-                ph: []
-            };
+            const historyData = { labels: [], temp: [], ph: [] };
 
             // --- WebSocket Connection ---
             function connectWebSocket() {
@@ -227,13 +255,11 @@
                         readyState: 1
                     };
                     onOpen();
-                    // Simulate receiving data every 3 seconds
                     setInterval(simulateDataReception, 3000);
                 }, 1000);
                 // --- SIMULATION END ---
 
-                // --- REAL WEBSOCKET EVENTS (uncomment for real use) ---
-                /*
+                /* --- REAL WEBSOCKET EVENTS ---
                 websocket = new WebSocket(`ws://${esp32_ip}/ws`);
                 websocket.onopen = onOpen;
                 websocket.onclose = onClose;
@@ -305,10 +331,28 @@
                     updateGauge(phGauge, ph, phGauge.config.options.plugins.gauge.range);
                     updateHistory(timestamp, null, ph);
                 }
+                if (data.tds !== undefined) {
+                    tdsValue.textContent = data.tds;
+                }
+                if (data.ammonia !== undefined) {
+                    const nh3 = parseFloat(data.ammonia);
+                    ammoniaValue.textContent = nh3.toFixed(2);
+                    ammoniaValue.parentElement.classList.remove('text-green-400', 'text-yellow-400', 'text-red-500');
+                    if (nh3 < 0.25) ammoniaValue.parentElement.classList.add('text-green-400');
+                    else if (nh3 < 1.0) ammoniaValue.parentElement.classList.add('text-yellow-400');
+                    else ammoniaValue.parentElement.classList.add('text-red-500');
+                }
                 if (data.waterLevel !== undefined) {
                     waterLevel.textContent = data.waterLevel ? 'OK' : 'LOW';
                     waterLevel.classList.toggle('text-red-500', !data.waterLevel);
                     waterLevel.classList.toggle('text-cyan-400', data.waterLevel);
+                }
+                if (data.heaterOn !== undefined) {
+                    heaterStatusText.textContent = data.heaterOn ? 'ON' : 'OFF';
+                    heaterStatusIcon.classList.toggle('text-orange-400', data.heaterOn);
+                    heaterStatusIcon.classList.toggle('text-gray-500', !data.heaterOn);
+                    heaterStatusText.classList.toggle('text-orange-400', data.heaterOn);
+                    heaterStatusText.classList.toggle('text-gray-400', !data.heaterOn);
                 }
                 if (data.pumpOn !== undefined) pumpToggle.checked = data.pumpOn;
                 if (data.feederOn !== undefined) feederToggle.checked = data.feederOn;
@@ -325,10 +369,8 @@
             // --- Event Listeners for Controls ---
             pumpToggle.addEventListener('change', () => sendMessage({ action: 'setPump', value: pumpToggle.checked }));
             feederToggle.addEventListener('change', () => sendMessage({ action: 'setFeeder', value: feederToggle.checked }));
-            
             lightIntensitySlider.addEventListener('input', () => lightIntensityValue.textContent = lightIntensitySlider.value);
             lightIntensitySlider.addEventListener('change', () => sendMessage({ action: 'setLightIntensity', value: parseInt(lightIntensitySlider.value) }));
-            
             lightColorSlider.addEventListener('input', () => lightColorValue.textContent = lightColorSlider.value);
             lightColorSlider.addEventListener('change', () => sendMessage({ action: 'setLightColor', value: parseInt(lightColorSlider.value) }));
 
@@ -356,7 +398,7 @@
                 setTimeout(() => {
                     feedNowBtn.disabled = false;
                     feedNowBtn.textContent = 'Feed Now';
-                }, 5000); // Re-enable after 5 seconds
+                }, 5000);
             });
 
             // --- Logging ---
@@ -371,59 +413,21 @@
 
             // --- Chart & Gauge Creation ---
             function initializeCharts() {
-                // Gauges
                 const tempColorStops = [[0, [52, 144, 220]], [0.5, [107, 204, 107]], [1, [220, 52, 52]]];
                 const phColorStops = [[0, [220, 52, 52]], [0.5, [107, 204, 107]], [1, [138, 43, 226]]];
                 tempGauge = createGauge('tempGauge', 'Temperature', [10, 40], tempColorStops);
                 phGauge = createGauge('phGauge', 'pH', [5, 9], phColorStops);
-
-                // History Chart
                 const ctx = document.getElementById('historyChart').getContext('2d');
                 historyChart = new Chart(ctx, {
                     type: 'line',
-                    data: {
-                        labels: historyData.labels,
-                        datasets: [
-                            {
-                                label: 'Temperature (°C)',
-                                data: historyData.temp,
-                                borderColor: 'rgba(52, 211, 153, 1)',
-                                backgroundColor: 'rgba(52, 211, 153, 0.1)',
-                                yAxisID: 'y',
-                                tension: 0.3,
-                                fill: true,
-                            },
-                            {
-                                label: 'pH',
-                                data: historyData.ph,
-                                borderColor: 'rgba(34, 211, 238, 1)',
-                                backgroundColor: 'rgba(34, 211, 238, 0.1)',
-                                yAxisID: 'y1',
-                                tension: 0.3,
-                                fill: true,
-                            }
-                        ]
-                    },
-                    options: {
-                        responsive: true,
-                        maintainAspectRatio: false,
-                        scales: {
-                            x: { ticks: { color: '#9CA3AF' }, grid: { color: '#4B5563' } },
-                            y: { type: 'linear', display: true, position: 'left', min: 15, max: 35, ticks: { color: '#9CA3AF' }, grid: { color: '#4B5563' } },
-                            y1: { type: 'linear', display: true, position: 'right', min: 6, max: 8, ticks: { color: '#9CA3AF' }, grid: { drawOnChartArea: false } }
-                        },
-                        plugins: { legend: { labels: { color: '#D1D5DB' } } }
-                    }
+                    data: { labels: historyData.labels, datasets: [ { label: 'Temp (°C)', data: historyData.temp, borderColor: 'rgba(52, 211, 153, 1)', backgroundColor: 'rgba(52, 211, 153, 0.1)', yAxisID: 'y', tension: 0.3, fill: true, }, { label: 'pH', data: historyData.ph, borderColor: 'rgba(34, 211, 238, 1)', backgroundColor: 'rgba(34, 211, 238, 0.1)', yAxisID: 'y1', tension: 0.3, fill: true, } ] },
+                    options: { responsive: true, maintainAspectRatio: false, scales: { x: { ticks: { color: '#9CA3AF' }, grid: { color: '#4B5563' } }, y: { type: 'linear', display: true, position: 'left', min: 15, max: 35, ticks: { color: '#9CA3AF' }, grid: { color: '#4B5563' } }, y1: { type: 'linear', display: true, position: 'right', min: 6, max: 8, ticks: { color: '#9CA3AF' }, grid: { drawOnChartArea: false } } }, plugins: { legend: { labels: { color: '#D1D5DB' } } } }
                 });
             }
 
             function createGauge(canvasId, label, range, colorStops) {
                 const ctx = document.getElementById(canvasId).getContext('2d');
-                return new Chart(ctx, {
-                    type: 'doughnut',
-                    data: { datasets: [{ data: [0, range[1] - range[0]], backgroundColor: [colorStops[1], '#4A5568'], borderWidth: 0, circumference: 180, rotation: 270 }] },
-                    options: { responsive: true, maintainAspectRatio: false, cutout: '70%', plugins: { tooltip: { enabled: false }, legend: { display: false }, gauge: { range, colorStops } }, animation: { duration: 500, easing: 'easeOutQuart' } }
-                });
+                return new Chart(ctx, { type: 'doughnut', data: { datasets: [{ data: [0, range[1] - range[0]], backgroundColor: [colorStops[1], '#4A5568'], borderWidth: 0, circumference: 180, rotation: 270 }] }, options: { responsive: true, maintainAspectRatio: false, cutout: '70%', plugins: { tooltip: { enabled: false }, legend: { display: false }, gauge: { range, colorStops } }, animation: { duration: 500, easing: 'easeOutQuart' } } });
             }
 
             function updateGauge(gauge, value, range) {
@@ -469,10 +473,14 @@
             
             // --- Mock Data Simulation ---
             function simulateDataReception() {
+                const temp = (24 + Math.random() * 4);
                 const mockData = {
-                    temperature: (24 + Math.random() * 4).toFixed(1),
+                    temperature: temp.toFixed(1),
                     ph: (6.8 + Math.random() * 0.4).toFixed(1),
+                    tds: Math.floor(120 + Math.random() * 60),
+                    ammonia: (Math.random() * 0.5).toFixed(2),
                     waterLevel: Math.random() > 0.1,
+                    heaterOn: temp < 25.5, // Heater is on if temp is below 25.5
                 };
                 logMessage(`SIMULATED RECV: ${JSON.stringify(mockData)}`);
                 updateDashboard(mockData);
